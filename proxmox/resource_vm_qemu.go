@@ -772,6 +772,8 @@ func resourceVmQemuCreate(d *schema.ResourceData, meta interface{}) error {
 				return err
 			}*/
 
+			logger.Debug().Int("vmid", vmr.VmId()).Msgf("[FRED] Config : %+v", config)
+
 			/*
 			err = config.UpdateConfig(vmr, client)
 			if err != nil {
