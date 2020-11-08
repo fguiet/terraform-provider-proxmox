@@ -765,6 +765,11 @@ func resourceVmQemuCreate(d *schema.ResourceData, meta interface{}) error {
 				return err
 			}
 
+			err = prepareDiskSize(client, vmr, qemuDisks)
+			if err != nil {
+				return err
+			}
+
 			err = config.UpdateConfig(vmr, client)
 			if err != nil {
 				// Set the id because when update config fail the vm is still created
@@ -775,10 +780,6 @@ func resourceVmQemuCreate(d *schema.ResourceData, meta interface{}) error {
 			// give sometime to proxmox to catchup
 			time.Sleep(time.Duration(d.Get("clone_wait").(int)) * time.Second)
 
-			err = prepareDiskSize(client, vmr, qemuDisks)
-			if err != nil {
-				return err
-			}
 
 		} else if d.Get("iso").(string) != "" {
 			config.QemuIso = d.Get("iso").(string)
