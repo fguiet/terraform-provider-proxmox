@@ -774,9 +774,9 @@ func resourceVmQemuCreate(d *schema.ResourceData, meta interface{}) error {
 				return err
 			}
 
-			clonedConfig, err := pxapi.NewConfigQemuFromApi(vmr, client)
+			/*clonedConfig, err := pxapi.NewConfigQemuFromApi(vmr, client)
 			clonedConfig.QemuDisks[0]["file"]
-			config.QemuDisks[0]["file"] := clonedConfig.QemuDisks[0]["file"]
+			config.QemuDisks[0]["file"] := clonedConfig.QemuDisks[0]["file"]*/
 
 			err = config.UpdateConfig(vmr, client)
 			if err != nil {
@@ -872,7 +872,7 @@ func resourceVmQemuUpdate(d *schema.ResourceData, meta interface{}) error {
 	// robust solution can be found.
 	qemuDisks, _ := ExpandDevicesList(d.Get("disk").([]interface{}))
 	for _, diskParamMap := range qemuDisks {
-		delete(diskParamMap, "file")  // removed; causes a crash in proxmox-api-go
+		//delete(diskParamMap, "file")  // removed; causes a crash in proxmox-api-go
 		delete(diskParamMap, "media") // removed; results in a duplicate key issue causing a 400 from proxmox
 	}
 
