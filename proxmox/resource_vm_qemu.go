@@ -778,12 +778,12 @@ func resourceVmQemuCreate(d *schema.ResourceData, meta interface{}) error {
 
 			logger.Debug().Int("vmid", vmr.VmId()).Msgf("[FRED] clonedConfig 2 : %+v", clonedConfig)
 			//clonedConfig.QemuDisks[0]["file"]
-			//config.QemuDisks = clonedConfig.QemuDisks
+			config.QemuDisks = clonedConfig.QemuDisks
 
-			for _, qemuDisk := range clonedConfig.QemuDisks {
+			/*for _, qemuDisk := range clonedConfig.QemuDisks {
 				config.QemuDisks[0]["file"] = qemuDisk["file"] 				
 				config.QemuDisks[0]["volume"] = qemuDisk["volume"]
-			}
+			}*/
 
 			log.Print("[FRED] After I set stuff")
 			logger.Debug().Int("vmid", vmr.VmId()).Msgf("[FRED] Config : %+v", config)
