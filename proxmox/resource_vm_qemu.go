@@ -774,9 +774,9 @@ func resourceVmQemuCreate(d *schema.ResourceData, meta interface{}) error {
 				return err
 			}
 
-			/*clonedConfig, err := pxapi.NewConfigQemuFromApi(vmr, client)
-			clonedConfig.QemuDisks[0]["file"]
-			config.QemuDisks[0]["file"] := clonedConfig.QemuDisks[0]["file"]*/
+			clonedConfig, err := pxapi.NewConfigQemuFromApi(vmr, client)
+			//clonedConfig.QemuDisks[0]["file"]
+			config.QemuDisks[0]["file"] := clonedConfig.QemuDisks[0]["file"]
 
 			err = config.UpdateConfig(vmr, client)
 			if err != nil {
