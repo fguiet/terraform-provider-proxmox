@@ -775,8 +775,10 @@ func resourceVmQemuCreate(d *schema.ResourceData, meta interface{}) error {
 			}
 
 			clonedConfig, err := pxapi.NewConfigQemuFromApi(vmr, client)
+			clonedConfig.QemuDisks[0]["file"]
+			config.QemuDisks[0]["file"] := clonedConfig.QemuDisks[0]["file"]
 
-			err = config.UpdateConfig(clonedConfig, client)
+			err = config.UpdateConfig(vmr, client)
 			if err != nil {
 				// Set the id because when update config fail the vm is still created
 				d.SetId(resourceId(targetNode, "qemu", vmr.VmId()))
