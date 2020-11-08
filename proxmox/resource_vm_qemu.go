@@ -766,22 +766,22 @@ func resourceVmQemuCreate(d *schema.ResourceData, meta interface{}) error {
 			}
 
 			
-			log.Print("[DEBUG] Fred was here")
-			/*err = prepareDiskSize(client, vmr, qemuDisks)
+			log.Print("[FRED] Fred was here")
+			err = prepareDiskSize(client, vmr, qemuDisks)
 			if err != nil {
 				return err
-			}*/
+			}
 
 			logger.Debug().Int("vmid", vmr.VmId()).Msgf("[FRED] Config : %+v", config)
 
-			/*
+			
 			err = config.UpdateConfig(vmr, client)
 			if err != nil {
 				// Set the id because when update config fail the vm is still created
 				d.SetId(resourceId(targetNode, "qemu", vmr.VmId()))
 				return err
 			}
-			*/
+			
 			log.Print("[DEBUG] RIEN")
 
 			// give sometime to proxmox to catchup
@@ -1165,6 +1165,7 @@ func prepareDiskSize(
 ) error {
 	logger, _ := CreateSubLogger("prepareDiskSize")
 	clonedConfig, err := pxapi.NewConfigQemuFromApi(vmr, client)
+	logger.Debug().Int("vmid", vmr.VmId()).Msgf("[FRED] clonedConfig : %+v", clonedConfig)
 	if err != nil {
 		return err
 	}
