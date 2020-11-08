@@ -765,12 +765,12 @@ func resourceVmQemuCreate(d *schema.ResourceData, meta interface{}) error {
 				return err
 			}
 
-			vmr.QemuDisks := sourceVmr.QemuDisks;
+			
 			log.Print("[DEBUG] Fred was here")
-			err = prepareDiskSize(client, vmr, qemuDisks)
+			/*err = prepareDiskSize(client, vmr, qemuDisks)
 			if err != nil {
 				return err
-			}
+			}*/
 
 			/*
 			err = config.UpdateConfig(vmr, client)
@@ -780,6 +780,7 @@ func resourceVmQemuCreate(d *schema.ResourceData, meta interface{}) error {
 				return err
 			}
 			*/
+			log.Print("[DEBUG] RIEN")
 
 			// give sometime to proxmox to catchup
 			time.Sleep(time.Duration(d.Get("clone_wait").(int)) * time.Second)
