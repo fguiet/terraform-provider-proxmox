@@ -782,6 +782,9 @@ func resourceVmQemuCreate(d *schema.ResourceData, meta interface{}) error {
 				config.QemuDisks[0]["file"] = qemuDisk["file"] 				
 			}
 
+			log.Print("[FRED] After I set stuff")
+			logger.Debug().Int("vmid", vmr.VmId()).Msgf("[FRED] Config : %+v", config)
+
 			err = config.UpdateConfig(vmr, client)
 			if err != nil {
 				// Set the id because when update config fail the vm is still created
