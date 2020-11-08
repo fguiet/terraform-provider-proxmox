@@ -794,6 +794,11 @@ func resourceVmQemuCreate(d *schema.ResourceData, meta interface{}) error {
 
 		client.StopVm(vmr)
 
+		err = prepareDiskSize(client, vmr, qemuDisks)
+		if err != nil {
+			return err
+		}
+
 		err := config.UpdateConfig(vmr, client)
 		if err != nil {
 			// Set the id because when update config fail the vm is still created
@@ -802,12 +807,7 @@ func resourceVmQemuCreate(d *schema.ResourceData, meta interface{}) error {
 		}
 
 		// give sometime to proxmox to catchup
-		time.Sleep(5 * time.Second)
-
-		err = prepareDiskSize(client, vmr, qemuDisks)
-		if err != nil {
-			return err
-		}
+		time.Sleep(5 * time.Second)		
 	}
 	d.SetId(resourceId(targetNode, "qemu", vmr.VmId()))
 	logger.Debug().Int("vmid", vmr.VmId()).Msgf("Set this vm (resource Id) to '%v'", d.Id())
