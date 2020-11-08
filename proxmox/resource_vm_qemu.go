@@ -782,6 +782,7 @@ func resourceVmQemuCreate(d *schema.ResourceData, meta interface{}) error {
 
 			for _, qemuDisk := range clonedConfig.QemuDisks {
 				config.QemuDisks[0]["file"] = qemuDisk["file"] 				
+				config.QemuDisks[0]["volume"] = qemuDisk["volume"]
 			}
 
 			log.Print("[FRED] After I set stuff")
