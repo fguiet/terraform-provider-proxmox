@@ -775,6 +775,8 @@ func resourceVmQemuCreate(d *schema.ResourceData, meta interface{}) error {
 			}
 
 			clonedConfig, err := pxapi.NewConfigQemuFromApi(vmr, client)
+
+			logger.Debug().Int("vmid", vmr.VmId()).Msgf("[FRED] clonedConfig 2 : %+v", clonedConfig)
 			//clonedConfig.QemuDisks[0]["file"]
 			//config.QemuDisks = clonedConfig.QemuDisks
 
