@@ -769,19 +769,20 @@ func resourceVmQemuCreate(d *schema.ResourceData, meta interface{}) error {
 
 			logger.Debug().Int("vmid", vmr.VmId()).Msgf("[FRED] Config : %+v", config)
 
-			
-			err = config.UpdateConfig(vmr, client)
+			err = prepareDiskSize(client, vmr, qemuDisks)
+			if err != nil {
+				return err
+			}
+
+			clonedConfig, err := pxapi.NewConfigQemuFromApi(vmr, client)
+
+			err = config.UpdateConfig(clonedConfig, client)
 			if err != nil {
 				// Set the id because when update config fail the vm is still created
 				d.SetId(resourceId(targetNode, "qemu", vmr.VmId()))
 				return err
 			}
 
-			err = prepareDiskSize(client, vmr, qemuDisks)
-			if err != nil {
-				return err
-			}
-			
 			log.Print("[DEBUG] RIEN")
 
 			// give sometime to proxmox to catchup
