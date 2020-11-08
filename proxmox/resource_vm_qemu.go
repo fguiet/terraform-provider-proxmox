@@ -764,21 +764,21 @@ func resourceVmQemuCreate(d *schema.ResourceData, meta interface{}) error {
 			if err != nil {
 				return err
 			}
-
 			
 			log.Print("[FRED] Fred was here")
-			err = prepareDiskSize(client, vmr, qemuDisks)
-			if err != nil {
-				return err
-			}
 
 			logger.Debug().Int("vmid", vmr.VmId()).Msgf("[FRED] Config : %+v", config)
 
 			
-			err = config.UpdateConfig(vmr, client)
+			/*err = config.UpdateConfig(vmr, client)
 			if err != nil {
 				// Set the id because when update config fail the vm is still created
 				d.SetId(resourceId(targetNode, "qemu", vmr.VmId()))
+				return err
+			}*/
+
+			err = prepareDiskSize(client, vmr, qemuDisks)
+			if err != nil {
 				return err
 			}
 			
