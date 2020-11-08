@@ -766,21 +766,24 @@ func resourceVmQemuCreate(d *schema.ResourceData, meta interface{}) error {
 			}
 
 			log.Print("[DEBUG] Fred was here")
+			err = prepareDiskSize(client, vmr, qemuDisks)
+			if err != nil {
+				return err
+			}
 
+			/*
 			err = config.UpdateConfig(vmr, client)
 			if err != nil {
 				// Set the id because when update config fail the vm is still created
 				d.SetId(resourceId(targetNode, "qemu", vmr.VmId()))
 				return err
 			}
+			*/
 
 			// give sometime to proxmox to catchup
 			time.Sleep(time.Duration(d.Get("clone_wait").(int)) * time.Second)
 
-			err = prepareDiskSize(client, vmr, qemuDisks)
-			if err != nil {
-				return err
-			}
+			
 
 		} else if d.Get("iso").(string) != "" {
 			config.QemuIso = d.Get("iso").(string)
