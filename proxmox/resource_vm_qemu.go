@@ -772,7 +772,7 @@ func resourceVmQemuCreate(d *schema.ResourceData, meta interface{}) error {
 				return err
 			}
 
-			vmr.QemuDisks :=  sourceVmr.QemuDisks
+			vmr.QemuDisks :=  &sourceVmr.QemuDisks
 			err = prepareDiskSize(client, vmr, qemuDisks)
 			if err != nil {
 				return err
